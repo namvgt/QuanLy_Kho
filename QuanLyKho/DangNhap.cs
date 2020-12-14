@@ -16,5 +16,10 @@ namespace QuanLyKho
           {
                InitializeComponent();
           }
-     }
+
+        private void btn_Dangnhap_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
 }

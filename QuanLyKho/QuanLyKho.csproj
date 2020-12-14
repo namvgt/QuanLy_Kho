@@ -92,5 +92,8 @@
   <ItemGroup>
     <None Include="Resources\Kho-NCTS-Noi-Bai.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\kho.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
