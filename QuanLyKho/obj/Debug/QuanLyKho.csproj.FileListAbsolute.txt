@@ -20,3 +20,13 @@ C:\Users\ADMIN\Documents\GitHub\QuanLy_Kho\QuanLyKho\obj\Debug\QuanLyKho.csproj.
 C:\Users\ADMIN\Documents\GitHub\QuanLy_Kho\QuanLyKho\obj\Debug\QuanLyKho.csproj.CoreCompileInputs.cache
 C:\Users\ADMIN\Documents\GitHub\QuanLy_Kho\QuanLyKho\obj\Debug\QuanLyKho.exe
 C:\Users\ADMIN\Documents\GitHub\QuanLy_Kho\QuanLyKho\obj\Debug\QuanLyKho.pdb
+C:\Users\ADMIN\Desktop\GitHub\QuanLy_Kho\QuanLyKho\bin\Debug\QuanLyKho.exe.config
+C:\Users\ADMIN\Desktop\GitHub\QuanLy_Kho\QuanLyKho\bin\Debug\QuanLyKho.exe
+C:\Users\ADMIN\Desktop\GitHub\QuanLy_Kho\QuanLyKho\bin\Debug\QuanLyKho.pdb
+C:\Users\ADMIN\Desktop\GitHub\QuanLy_Kho\QuanLyKho\obj\Debug\QuanLyKho.csprojAssemblyReference.cache
+C:\Users\ADMIN\Desktop\GitHub\QuanLy_Kho\QuanLyKho\obj\Debug\QuanLyKho.DangNhap.resources
+C:\Users\ADMIN\Desktop\GitHub\QuanLy_Kho\QuanLyKho\obj\Debug\QuanLyKho.Trang_Chu.resources
+C:\Users\ADMIN\Desktop\GitHub\QuanLy_Kho\QuanLyKho\obj\Debug\QuanLyKho.Properties.Resources.resources
+C:\Users\ADMIN\Desktop\GitHub\QuanLy_Kho\QuanLyKho\obj\Debug\QuanLyKho.csproj.GenerateResource.cache
+C:\Users\ADMIN\Desktop\GitHub\QuanLy_Kho\QuanLyKho\obj\Debug\QuanLyKho.exe
+C:\Users\ADMIN\Desktop\GitHub\QuanLy_Kho\QuanLyKho\obj\Debug\QuanLyKho.pdb
