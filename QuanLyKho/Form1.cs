@@ -13,7 +13,7 @@ namespace QuanLyKho
 {
     public partial class Trang_Chu : Form
     {
-        string chuoikn = @"Data Source=NOKIA-E490\SQLExpress;Initial Catalog=QuanLy_KHO;Integrated Security=True";
+        string chuoikn = @"Data Source=NAM\SQLDEV2019;Initial Catalog=QuanLy_KHO;Integrated Security=True";
         string sql;
         SqlConnection ketnoi;
         SqlCommand thuchien;
@@ -23,9 +23,24 @@ namespace QuanLyKho
         {
             InitializeComponent();
             button2.Font = new Font(button2.Font.FontFamily, 11);
+            mahh_item();
+            LS_DoiTra();
         }
 
-
+        private void mahh_item()
+        {
+            sql = "select MA_HH from HANGHOA";
+            ketnoi = new SqlConnection(chuoikn);
+            ketnoi.Open();
+            thuchien = new SqlCommand(sql, ketnoi);
+            docdulieu = thuchien.ExecuteReader();
+            lst_dsHH.Items.Clear();
+            while (docdulieu.Read())
+            {
+                cb_Doitra_maVPP.Items.Add(docdulieu[0].ToString());
+            }
+            ketnoi.Close();
+        }
 
         private void btn_QLHH_MouseLeave(object sender, EventArgs e)
         {
@@ -58,6 +73,33 @@ namespace QuanLyKho
                 lst_dsHH.Items[i].SubItems.Add(docdulieu[7].ToString());
                 i++;
             }
+            ketnoi.Close();
+        }
+        public void LS_DoiTra()
+        {
+            sql = "select dt.MA_PHIEU, TENNV, pdt.MA_HH, hh.TEN_HH, pdt.SOLUONG, TEN_NCC, NGAY_DOITRA from NHACUNGCAP ncc, NHANVIEN nv, HANGHOA hh, PHIEUDOITRA dt, CT_PHIEUDOITRA pdt where dt.MANV = nv.MANV and ncc.MA_NCC = hh.MA_NCC and hh.MA_HH = pdt.MA_HH and pdt.MA_PHIEU = dt.MA_PHIEU";
+            ketnoi = new SqlConnection(chuoikn);
+            ketnoi.Open();
+            thuchien = new SqlCommand(sql, ketnoi);
+            docdulieu = thuchien.ExecuteReader();
+            lst_LS_doitra.Items.Clear();
+            i = 0;
+            if (docdulieu.HasRows)
+            {
+                while (docdulieu.Read())
+                {
+                    lst_LS_doitra.Items.Add(docdulieu[0].ToString());
+                    lst_LS_doitra.Items[i].SubItems.Add(docdulieu[1].ToString());
+                    lst_LS_doitra.Items[i].SubItems.Add(docdulieu[2].ToString());
+                    lst_LS_doitra.Items[i].SubItems.Add(docdulieu[3].ToString());
+                    lst_LS_doitra.Items[i].SubItems.Add(docdulieu[4].ToString());
+                    lst_LS_doitra.Items[i].SubItems.Add(docdulieu[5].ToString());
+                    DateTime time =(DateTime) docdulieu[6];
+                    lst_LS_doitra.Items[i].SubItems.Add(time.ToString("dd/MM/yyyy"));
+                    i++;
+                }
+            }
+           
             ketnoi.Close();
         }
         private void btn_QLHH_Click(object sender, EventArgs e)
@@ -313,6 +355,65 @@ namespace QuanLyKho
         private void txt_tim_tenhh_Click(object sender, EventArgs e)
         {
             txt_tim_tenhh.Text = "";
+        }
+
+        private void btn_Doitra_capnhat_Click(object sender, EventArgs e)
+        {
+            LS_DoiTra();
+        }
+
+        private void cb_Doitra_maVPP_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            sql = "select TEN_HH, hh.MA_NCC, TEN_NCC, SOLUONGLOI from HANGHOA hh, NHACUNGCAP ncc where MA_HH = '" + cb_Doitra_maVPP.Text+"' and hh.MA_NCC = ncc.MA_NCC";
+            ketnoi = new SqlConnection(chuoikn);
+            ketnoi.Open();
+            thuchien = new SqlCommand(sql, ketnoi);
+            docdulieu = thuchien.ExecuteReader();
+            lst_dsHH.Items.Clear();
+            if (docdulieu.HasRows)
+            {
+                while (docdulieu.Read())
+                {
+                    txt_Doitra_TenVPP.Text = docdulieu[0].ToString();
+                    txt_Doitra_maNCC.Text = docdulieu[1].ToString();
+                    txt_doitra_tenNCC.Text = docdulieu[2].ToString();
+                    txt_Conlai.Text = docdulieu[3].ToString();
+                }
+            }
+            ketnoi.Close();
+        }
+
+        private void label17_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_Doitra_Click(object sender, EventArgs e)
+        {
+            
+            sql = "select COUNT(*) from PHIEUDOITRA";
+            ketnoi = new SqlConnection(chuoikn);
+            ketnoi.Open();
+            thuchien = new SqlCommand(sql, ketnoi);
+            int SL =(int)thuchien.ExecuteScalar();
+            string MAPHIEU = "P" + (SL + 1).ToString("000");
+            sql = "insert PHIEUDOITRA values('"+MAPHIEU+"', N'Phiếu đổi trả', 'NV01', '"+txt_Doitra_maNCC.Text+"', null)";
+            thuchien = new SqlCommand(sql, ketnoi);
+            thuchien.ExecuteNonQuery();
+            sql = "insert CT_PHIEUDOITRA values('" + MAPHIEU + "', '"+cb_Doitra_maVPP.Text+"', '"+txt_Doitra_soluong.Text+ "', '" + DateTime.Now.ToString()+"')";
+            thuchien = new SqlCommand(sql, ketnoi);
+            thuchien.ExecuteNonQuery();
+            sql = "update HANGHOA set SOLUONGLOI = SOLUONGLOI - " + txt_Doitra_soluong.Text + " where MA_HH = '"+cb_Doitra_maVPP.Text+"'";
+            thuchien = new SqlCommand(sql, ketnoi);
+            thuchien.ExecuteNonQuery();
+            ketnoi.Close();
+            txt_Conlai.Text = (int.Parse(txt_Conlai.Text) - int.Parse(txt_Doitra_soluong.Text)).ToString();
+            LS_DoiTra();
+        }
+
+        private void lst_LS_doitra_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
